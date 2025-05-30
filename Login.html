@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Login - Keyboard Only</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom focus styles for better visibility */
+        .focusable:focus {
+            outline: 3px solid #3b82f6;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Skip link styling - hidden until focused */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: #3b82f6;
+            color: white;
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s;
+        }
+        
+        .skip-link:focus {
+            top: 0;
+        }
+        
+        /* Custom error styling */
+        .error-message {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .error-message.show {
+            max-height: 100px;
+        }
+    </style>
+</head>
+<body class="bg-white-100 min-h-screen flex items-center justify-center p-4">
+    <!-- Skip to main content link for screen readers -->
+    <a href="#main-content" class="skip-link focusable">Skip to main content</a>
+    
+    <main id="main-content" class="bg-gray-200 rounded-lg shadow-lg overflow-hidden w-full max-w-md">
+        <div class="p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2" tabindex="-1">Welcome Back</h1>
+                <p class="text-gray-600" tabindex="-1">Please login to continue</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div id="errorContainer" class="error-message bg-red-50 border-l-4 border-red-500 p-4 text-red-700" role="alert" aria-live="assertive">
+                    <p id="errorMessage" class="font-medium"></p>
+                </div>
+                
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Username / e-mail</label>
+                    <div class="relative">
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            required
+                            aria-required="true"
+                            autocomplete="email"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focusable"
+                            placeholder="Enter your username or e-mail"
+                            aria-describedby="emailHelp"
+                        >
+                    </div>
+                    <p id="emailHelp" class="mt-1 text-sm text-gray-500">We'll never share your email with anyone else.</p>
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required
+                            aria-required="true"
+                            autocomplete="current-password"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focusable"
+                            placeholder="Enter the password"
+                            aria-describedby="passwordHelp"
+                        >
+                    </div>
+                    <p id="passwordHelp" class="mt-1 text-sm text-gray-500">Must be at least 8 characters long.</p>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            id="remember-me" 
+                            name="remember-me" 
+                            type="checkbox" 
+                            class="h-4 w-4 text-blue-600 focusable rounded border-gray-300"
+                        >
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-blue-600 hover:text-blue-500 focusable rounded focus:outline-none">Forgot password?</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <button 
+                        type="submit" 
+                        id="loginButton"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focusable"
+                    >
+                        Sign in
+                    </button>
+                </div>
+            </form>
+            
+            <div class="mt-6">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                    </div>
+                </div>
+                
+                <div class="mt-6 grid grid-cols-2 gap-3">
+                    <button 
+                        type="button"
+                        class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focusable"
+                        aria-label="Sign in with Google"
+                    >
+                        <span class="sr-only">Sign in with Google</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M12.545 10.239v3.821h5.445c-0.712 2.315-2.647 3.972-5.445 3.972-3.332 0-6.033-2.701-6.033-6.032s2.701-6.032 6.033-6.032c1.498 0 2.866 0.549 3.921 1.453l2.814-2.814c-1.784-1.667-4.166-2.685-6.735-2.685-5.522 0-10 4.477-10 10s4.478 10 10 10c8.396 0 10-7.496 10-10 0-0.67-0.069-1.325-0.189-1.955h-9.811z"/>
+                        </svg>
+                    </button>
+                    
+                    <button 
+                        type="button"
+                        class="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focusable"
+                        aria-label="Sign in with Microsoft"
+                    >
+                        <span class="sr-only">Sign in with Microsoft</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 23 23" aria-hidden="true">
+                            <path d="M0 0h23v23H0z" fill="#f3f3f3"/>
+                            <path d="M1 1h10v10H1z" fill="#f1511b"/>
+                            <path d="M12 1h10v10H12z" fill="#80cc28"/>
+                            <path d="M1 12h10v10H1z" fill="#00adef"/>
+                            <path d="M12 12h10v10H12z" fill="#fbbc09"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-gray-50 px-8 py-6">
+            <p class="text-center text-sm text-gray-600">
+                Don't have an account? 
+                <a href="#" class="font-medium text-blue-600 hover:text-blue-500 focusable rounded focus:outline-none">Sign up</a>
+            </p>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            const errorContainer = document.getElementById('errorContainer');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Focus on email input when page loads
+            emailInput.focus();
+            
+            // Handle form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Reset error state
+                errorContainer.classList.remove('show');
+                errorMessage.textContent = '';
+                
+                // Validate inputs
+                if (!emailInput.value) {
+                    showError('Please enter your email address');
+                    emailInput.focus();
+                    return;
+                }
+                
+                if (!passwordInput.value) {
+                    showError('Please enter your password');
+                    passwordInput.focus();
+                    return;
+                }
+                
+                if (passwordInput.value.length < 8) {
+                    showError('Password must be at least 8 characters long');
+                    passwordInput.focus();
+                    return;
+                }
+                
+                // Simulate successful login
+                simulateLogin();
+            });
+            
+            // Show error message
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorContainer.classList.add('show');
+                errorContainer.focus();
+            }
+            
+            // Simulate login process
+            function simulateLogin() {
+                loginButton.disabled = true;
+                loginButton.innerHTML = 'Signing in...';
+                
+                // Simulate API call delay
+                setTimeout(function() {
+                    alert('Login successful! (This is a demo)');
+                    loginButton.disabled = false;
+                    loginButton.innerHTML = 'Sign in';
+                }, 1500);
+            }
+            
+            // Keyboard navigation enhancements
+            document.addEventListener('keydown', function(e) {
+                // Trap focus within the modal when tabbing
+                if (e.key === 'Tab') {
+                    const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+                    const modal = document.querySelector('main');
+                    
+                    if (modal.contains(document.activeElement)) {
+                        const focusable = Array.from(modal.querySelectorAll(focusableElements));
+                        const firstElement = focusable[0];
+                        const lastElement = focusable[focusable.length - 1];
+                        
+                        if (e.shiftKey && document.activeElement === firstElement) {
+                            lastElement.focus();
+                            e.preventDefault();
+                        } else if (!e.shiftKey && document.activeElement === lastElement) {
+                            firstElement.focus();
+                            e.preventDefault();
+                        }
+                    }
+                }
+                
+                // Submit form with Enter key when focused on inputs
+                if (e.key === 'Enter' && (document.activeElement === emailInput || document.activeElement === passwordInput)) {
+                    loginForm.dispatchEvent(new Event('submit'));
+                }
+            });
+        });
+    </script>
+</body>
+</html>
